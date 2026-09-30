@@ -1,0 +1,342 @@
+@layer theme, base, components, utilities;
+
+/* Код-Кемп — scoped styles. Everything lives under .kk so sibling sites are untouched. */
+
+@property --kk-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@layer components {
+.kk {
+  --kk-base: #eef1f7;
+  --kk-paper: #ffffff;
+  --kk-ink: #14161f;
+  --kk-muted: #5b6172;
+  --kk-line: #d9deea;
+  --kk-blue: #3d5afe;
+  --kk-coral: #ff5a36;
+  --kk-yellow: #ffc400;
+  --kk-mint: #00c389;
+  --kk-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+
+  min-height: 100vh;
+  background: var(--kk-base);
+  color: var(--kk-ink);
+  font-family: 'Onest Variable', system-ui, sans-serif;
+  font-feature-settings: 'ss01' on;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+.kk ::selection {
+  background: var(--kk-yellow);
+  color: var(--kk-ink);
+}
+
+.kk :focus-visible {
+  outline: 3px solid var(--kk-blue);
+  outline-offset: 3px;
+}
+
+.kk-mono {
+  font-family: var(--kk-mono);
+  font-feature-settings: normal;
+}
+
+.kk-wrap {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 640px) {
+  .kk-wrap { padding-inline: 24px; }
+}
+@media (min-width: 1024px) {
+  .kk-wrap { padding-inline: 32px; }
+}
+
+.kk-display {
+  font-weight: 860;
+  letter-spacing: -0.052em;
+  line-height: 0.9;
+}
+
+.kk-h2 {
+  font-weight: 840;
+  font-size: clamp(2.15rem, 1.1rem + 3.9vw, 4.5rem);
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.kk-lead {
+  font-size: clamp(1.02rem, 0.95rem + 0.3vw, 1.2rem);
+  line-height: 1.55;
+  color: var(--kk-muted);
+  max-width: 34rem;
+  text-wrap: pretty;
+}
+
+/* ---------- Keycap button (physical key) ---------- */
+.kk-key {
+  --cap: #ffffff;
+  --cap-edge: #c7cedd;
+  --cap-ink: var(--kk-ink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  background: var(--cap);
+  color: var(--cap-ink);
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  box-shadow:
+    inset 0 -3px 0 rgb(0 0 0 / 0.05),
+    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    0 5px 0 var(--cap-edge),
+    0 12px 18px -10px rgb(20 22 31 / 0.35);
+  transform: translateY(0);
+  transition:
+    transform 0.14s cubic-bezier(0.3, 0.7, 0.4, 1.5),
+    box-shadow 0.14s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.kk-key:hover {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 -3px 0 rgb(0 0 0 / 0.05),
+    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    0 4px 0 var(--cap-edge),
+    0 10px 16px -10px rgb(20 22 31 / 0.35);
+}
+.kk-key:active,
+.kk-key[data-on='true'],
+.peer:checked + .kk-key {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 -2px 0 rgb(0 0 0 / 0.06),
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    0 1px 0 var(--cap-edge),
+    0 4px 8px -6px rgb(20 22 31 / 0.35);
+}
+.kk-key[data-on='true'],
+.peer:checked + .kk-key {
+  --cap: var(--kk-blue);
+  --cap-edge: #2536b5;
+  --cap-ink: #fff;
+}
+.peer:focus-visible + .kk-key {
+  outline: 3px solid var(--kk-blue);
+  outline-offset: 4px;
+}
+
+.kk-key--blue { --cap: var(--kk-blue); --cap-edge: #2536b5; --cap-ink: #fff; }
+.kk-key--coral { --cap: var(--kk-coral); --cap-edge: #c33a1c; --cap-ink: #fff; }
+.kk-key--yellow { --cap: var(--kk-yellow); --cap-edge: #c99a00; --cap-ink: var(--kk-ink); }
+.kk-key--mint { --cap: var(--kk-mint); --cap-edge: #008d63; --cap-ink: var(--kk-ink); }
+.kk-key--ink { --cap: #262a38; --cap-edge: #0b0c12; --cap-ink: #fff; }
+
+/* ---------- Glowing CTA ---------- */
+.kk-cta-wrap {
+  position: relative;
+  display: inline-flex;
+  isolation: isolate;
+  will-change: transform;
+}
+.kk-cta-glow {
+  position: absolute;
+  inset: -3px -3px 1px;
+  border-radius: 20px;
+  z-index: -1;
+  background: conic-gradient(from var(--kk-angle), #3d5afe, #00c389, #ffc400, #ff5a36, #3d5afe);
+  filter: blur(12px);
+  opacity: 0.6;
+  animation: kk-spin 4.5s linear infinite;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  pointer-events: none;
+}
+.kk-cta-wrap:hover .kk-cta-glow {
+  opacity: 0.95;
+  filter: blur(16px);
+}
+.kk-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  height: 3.25rem;
+  padding: 0 1.55em;
+  border-radius: 16px;
+  font-weight: 720;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+  color: #fff;
+  white-space: nowrap;
+  cursor: pointer;
+  background: linear-gradient(180deg, #6b82ff 0%, #3d5afe 48%, #2f4ae8 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.45),
+    inset 0 -2px 0 rgb(0 0 0 / 0.12),
+    0 5px 0 #2536b5,
+    0 18px 40px -12px rgb(61 90 254 / 0.75);
+  transition: transform 0.14s cubic-bezier(0.3, 0.7, 0.4, 1.5), box-shadow 0.14s ease;
+}
+.kk-cta::after {
+  content: '';
+  position: absolute;
+  inset: 1px 1px 50%;
+  border-radius: 15px 15px 40% 40% / 15px 15px 12px 12px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0));
+  pointer-events: none;
+}
+.kk-cta:hover {
+  transform: translateY(1px);
+}
+.kk-cta:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    inset 0 -2px 0 rgb(0 0 0 / 0.12),
+    0 1px 0 #2536b5,
+    0 8px 22px -10px rgb(61 90 254 / 0.8);
+}
+.kk-cta--sm {
+  height: 2.75rem;
+  padding: 0 1.15em;
+  font-size: 0.95rem;
+  border-radius: 13px;
+}
+.kk-cta--lg {
+  height: 3.75rem;
+  padding: 0 1.9em;
+  font-size: 1.1rem;
+  border-radius: 18px;
+}
+@keyframes kk-spin {
+  to { --kk-angle: 360deg; }
+}
+
+/* ---------- Hero caret ---------- */
+.kk-caret {
+  display: inline-block;
+  width: 0.09em;
+  height: 0.78em;
+  margin-left: 0.08em;
+  vertical-align: -0.04em;
+  background: var(--kk-coral);
+  border-radius: 2px;
+  animation: kk-blink 1.05s steps(1) infinite;
+}
+@keyframes kk-blink {
+  50% { opacity: 0; }
+}
+
+/* ---------- Marquee ---------- */
+.kk-marquee {
+  display: flex;
+  width: max-content;
+  animation: kk-marq var(--kk-dur, 60s) linear infinite;
+}
+.kk-marquee[data-reverse='true'] { animation-direction: reverse; }
+.kk-marquee-host:hover .kk-marquee,
+.kk-marquee-host:focus-within .kk-marquee {
+  animation-play-state: paused;
+}
+@keyframes kk-marq {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ---------- Range slider (sandbox) ---------- */
+.kk-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 30px;
+  background: transparent;
+  cursor: pointer;
+}
+.kk-range::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--c) var(--p), #2b3040 var(--p));
+}
+.kk-range::-moz-range-track {
+  height: 8px;
+  border-radius: 99px;
+  background: #2b3040;
+}
+.kk-range::-moz-range-progress {
+  height: 8px;
+  border-radius: 99px;
+  background: var(--c);
+}
+.kk-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px;
+  height: 26px;
+  margin-top: -9px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 3px 0 #aab2c5, 0 8px 14px -6px rgb(0 0 0 / 0.6);
+  transition: transform 0.15s ease;
+}
+.kk-range::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 3px 0 #aab2c5, 0 8px 14px -6px rgb(0 0 0 / 0.6);
+}
+.kk-range:active::-webkit-slider-thumb { transform: translateY(2px); }
+.kk-range:focus-visible {
+  outline: 3px solid #8fa2ff;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ---------- Process path markers ---------- */
+.kk-step-dot {
+  transition: transform 0.35s cubic-bezier(0.3, 0.7, 0.4, 1.6), background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+.kk-step[data-active='true'] .kk-step-dot {
+  transform: translateY(3px);
+}
+.kk-step[data-active='true'] .kk-step-body {
+  opacity: 1;
+}
+.kk-step-body {
+  opacity: 0.45;
+  transition: opacity 0.4s ease;
+}
+
+/* ---------- Grid paper for canvas panel ---------- */
+.kk-gridpaper {
+  background-color: #fff;
+  background-image:
+    linear-gradient(#e8ecf5 1px, transparent 1px),
+    linear-gradient(90deg, #e8ecf5 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+}
+
+
+.kk-num {
+  display: inline-block;
+  animation: kk-pop 0.35s cubic-bezier(0.3, 0.7, 0.4, 1.6);
+}
+@keyframes kk-pop {
+  from { transform: scale(1.35); }
+  to { transform: scale(1); }
+}
+
+}

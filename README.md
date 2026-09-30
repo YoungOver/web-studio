@@ -1,44 +1,46 @@
 # web-studio
 
-Ten production-style marketing sites and app screens built on one codebase: React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui, Magic UI and Aceternity components, GSAP and Framer Motion, and real-time 3D with Three.js / React Three Fiber.
+Десять маркетинговых сайтов и экранов приложений на общей кодовой базе: React 19,
+TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui, компоненты Magic UI и Aceternity, GSAP и
+Framer Motion, 3D в реальном времени на Three.js и React Three Fiber.
 
-Every page is a different brand with its own art direction, not a recoloured template.
+Каждая страница сделана под свой бренд со своей арт-дирекцией, а не перекрашенный шаблон.
 
 | | |
 |---|---|
-| ![](docs/detailing_1440_0.jpg) **Detailing studio**: liquid-chrome WebGL hero, 3D wrap-film configurator | ![](docs/club_1440_0.jpg) **Computer club**: 3D neon logo, seat booking grid |
-| ![](docs/clinic_1440_0.jpg) **Dental clinic**: calm editorial layout, online booking | ![](docs/coffee_1440_0.jpg) **Coffee roastery**: oversized type, rotating badge, menu columns |
-| ![](docs/school_1440_0.jpg) **Coding school**: 3D keyboard, live code block | ![](docs/ai-saas_1440_0.jpg) **AI SaaS**: shader background, interactive demos |
-| ![](docs/shop_1440_0.jpg) **E-commerce**: catalog, cart, checkout modal | ![](docs/dashboard_1440_0.jpg) **Sales dashboard**: Recharts, KPI cards, dark UI |
-| ![](docs/repair_1440_0.jpg) **Renovation company**: estimate calculator | ![](docs/miniapp_1440_0.jpg) **Telegram Mini App**: order flow for a coffee shop |
+| ![](docs/detailing_1440_0.jpg) **Детейлинг-студия**: WebGL-обложка с жидким хромом, 3D-конфигуратор плёнки | ![](docs/club_1440_0.jpg) **Компьютерный клуб**: неоновый 3D-логотип, бронирование мест |
+| ![](docs/clinic_1440_0.jpg) **Стоматология**: спокойная журнальная вёрстка, онлайн-запись | ![](docs/coffee_1440_0.jpg) **Обжарка кофе**: крупная типографика, вращающийся бейдж, меню колонками |
+| ![](docs/school_1440_0.jpg) **Школа программирования**: 3D-клавиатура, живой блок кода | ![](docs/ai-saas_1440_0.jpg) **AI-сервис**: шейдерный фон, интерактивные демо |
+| ![](docs/shop_1440_0.jpg) **Интернет-магазин**: каталог, корзина, оформление заказа | ![](docs/dashboard_1440_0.jpg) **Дашборд продаж**: Recharts, карточки KPI, тёмная тема |
+| ![](docs/repair_1440_0.jpg) **Ремонт квартир**: калькулятор сметы | ![](docs/miniapp_1440_0.jpg) **Telegram Mini App**: оформление заказа в кофейне |
 
-Mobile layouts:
+Мобильная вёрстка:
 
 <p>
 <img src="docs/clinic_390_0.jpg" width="160"> <img src="docs/coffee_390_0.jpg" width="160"> <img src="docs/club_390_0.jpg" width="160"> <img src="docs/detailing_390_0.jpg" width="160"> <img src="docs/school_390_0.jpg" width="160">
 </p>
 
-## Stack
+## Стек
 
-- **UI:** React 19, TypeScript 6, Tailwind CSS 4, shadcn/ui, Radix, Base UI
-- **Motion:** GSAP + ScrollTrigger, Framer Motion, Lenis smooth scroll
-- **3D and graphics:** Three.js, React Three Fiber, drei, postprocessing, custom GLSL shaders, cobe globe, tsParticles
-- **Build:** Vite 8 multi-page build, oxlint, code splitting per page
-- **Quality:** respects `prefers-reduced-motion`, keyboard focus states, light assets, audited with the Playwright suite from [web-qa-autotests](https://github.com/YoungOver/web-qa-autotests)
+- **Интерфейс:** React 19, TypeScript 6, Tailwind CSS 4, shadcn/ui, Radix, Base UI
+- **Анимация:** GSAP и ScrollTrigger, Framer Motion, плавная прокрутка Lenis
+- **3D и графика:** Three.js, React Three Fiber, drei, postprocessing, свои GLSL-шейдеры, глобус cobe, tsParticles
+- **Сборка:** многостраничная сборка Vite 8, oxlint, разбиение кода по страницам
+- **Качество:** учитывается `prefers-reduced-motion`, видимый фокус с клавиатуры, лёгкие ассеты, аудит набором Playwright из [web-qa-autotests](https://github.com/YoungOver/web-qa-autotests)
 
-## Structure
+## Структура
 
 ```
-src/               pages, shared sections, magicui and aceternity based effects
-public/img         optimised imagery
-scripts/           screenshot and build helpers
-*.html             one entry per site
+src/               страницы, общие секции, эффекты на основе magicui и aceternity
+public/img         оптимизированные изображения
+scripts/           скриншоты и вспомогательные скрипты сборки
+*.html             отдельная точка входа на каждый сайт
 ```
 
-## Run
+## Запуск
 
 ```bash
 npm install
-npm run dev        # all pages at http://localhost:5173/<page>.html
-npm run build      # static multi-page build in dist/
+npm run dev        # все страницы на http://localhost:5173/<страница>.html
+npm run build      # статическая многостраничная сборка в dist/
 ```

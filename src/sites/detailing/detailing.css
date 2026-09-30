@@ -1,0 +1,267 @@
+/* ГЛЯНЕЦ — scoped styles. Everything lives under .gl-root */
+
+.gl-root {
+  --asphalt: #0e0f12;
+  --gunmetal: #1a1d22;
+  --line: #2b2f36;
+  --chrome: #d9dee5;
+  --muted: #8c939e;
+  --signal: #3b7bff;
+  --signal-soft: rgba(59, 123, 255, 0.45);
+  --display: 'Dela Gothic One', 'Manrope Variable', system-ui, sans-serif;
+  --body: 'Manrope Variable', system-ui, sans-serif;
+
+  background: var(--asphalt);
+  color: var(--chrome);
+  font-family: var(--body);
+  overflow-x: clip;
+  min-height: 100vh;
+}
+
+.gl-root ::selection { background: var(--signal); color: #fff; }
+
+.gl-display {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+
+/* Visible keyboard focus everywhere */
+.gl-root :focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Chrome type ---------- */
+.gl-chrome {
+  background-image:
+    linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.95) 48%, rgba(170, 200, 255, 0.7) 51%, transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #e4e8ee 30%, #8d949f 49%, #3a3f47 53%, #aab1bb 66%, #f3f5f8 86%, #c5cbd3 100%);
+  background-size: 260% 100%, 100% 100%;
+  background-position: 180% 0, 0 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.gl-sheen { animation: gl-sheen 7s cubic-bezier(0.45, 0, 0.2, 1) 2.2s infinite; }
+@keyframes gl-sheen {
+  0% { background-position: 180% 0, 0 0; }
+  38%, 100% { background-position: -80% 0, 0 0; }
+}
+
+.gl-chrome-quiet {
+  background-image: linear-gradient(180deg, #f4f6f9 0%, #c9ced6 46%, #5d636d 56%, #b8bec7 78%, #e8ebef 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Buttons ---------- */
+.gl-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  background: var(--signal);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -8px 16px rgba(10, 30, 90, 0.35),
+    0 0 0 1px rgba(120, 165, 255, 0.5),
+    0 10px 40px -6px rgba(59, 123, 255, 0.75),
+    0 0 90px -10px rgba(59, 123, 255, 0.55);
+  transition: box-shadow 0.35s ease, background-color 0.35s ease;
+  will-change: transform;
+}
+.gl-cta:hover {
+  background: #4d88ff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -8px 16px rgba(10, 30, 90, 0.3),
+    0 0 0 1px rgba(150, 185, 255, 0.7),
+    0 14px 50px -4px rgba(59, 123, 255, 0.9),
+    0 0 130px -10px rgba(59, 123, 255, 0.7);
+}
+.gl-cta:disabled { opacity: 0.6; cursor: progress; }
+
+.gl-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 222, 229, 0.22);
+  background: rgba(14, 15, 18, 0.35);
+  backdrop-filter: blur(10px);
+  color: var(--chrome);
+  font-weight: 600;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+.gl-ghost:hover { border-color: rgba(217, 222, 229, 0.5); background: rgba(26, 29, 34, 0.6); }
+
+/* Segmented controls & chips */
+.gl-seg {
+  display: inline-flex;
+  padding: 4px;
+  gap: 2px;
+  border-radius: 999px;
+  background: rgba(26, 29, 34, 0.8);
+  border: 1px solid var(--line);
+  max-width: 100%;
+}
+.gl-seg button {
+  position: relative;
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: color 0.25s ease;
+  white-space: nowrap;
+  z-index: 1;
+}
+.gl-seg[data-size='lg'] button { padding: 0.75rem 1.25rem; font-size: 0.98rem; }
+@media (max-width: 420px) { .gl-seg button, .gl-seg[data-size='lg'] button { padding: 0.6rem 0.8rem; font-size: 0.88rem; } }
+.gl-seg button[aria-pressed='true'] { color: #fff; }
+.gl-seg button:hover { color: var(--chrome); }
+.gl-seg-thumb {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #3a3f48, #23272d);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 0 1px rgba(59, 123, 255, 0.55), 0 6px 22px -6px rgba(59, 123, 255, 0.7);
+  z-index: -1;
+}
+
+/* ---------- Background blobs ---------- */
+.gl-blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(90px);
+  pointer-events: none;
+  transition: background-color 1.2s ease;
+}
+
+.gl-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* WebGL fallback for the hero */
+.gl-chrome-fallback {
+  background:
+    radial-gradient(120% 70% at 75% 20%, rgba(255, 255, 255, 0.55), transparent 55%),
+    radial-gradient(60% 40% at 30% 70%, rgba(59, 123, 255, 0.25), transparent 70%),
+    linear-gradient(160deg, #1a1d22 0%, #6f7680 32%, #e6e9ee 44%, #2b2f36 52%, #0e0f12 70%, #454b54 86%, #0e0f12 100%);
+}
+
+/* ---------- Services list ---------- */
+.gl-svc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.gl-svc[data-open='true'] .gl-svc-panel { grid-template-rows: 1fr; }
+@media (min-width: 768px) { .gl-svc-panel { display: none; } }
+.gl-svc-name { transition: color 0.35s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.gl-svc[data-open='false'] .gl-svc-name { color: #5d636d; }
+.gl-svc[data-open='true'] .gl-svc-name { color: var(--chrome); }
+@media (min-width: 768px) {
+  .gl-svc[data-open='true'] .gl-svc-name { transform: translateX(0.5rem); }
+}
+.gl-svc-price { transition: opacity 0.35s ease, color 0.35s ease; }
+.gl-svc[data-open='false'] .gl-svc-price { color: var(--muted); }
+.gl-svc[data-open='true'] .gl-svc-price { color: #fff; }
+
+.gl-svc-detail { transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.gl-svc[data-open='false'] .gl-svc-detail { opacity: 0; transform: translateY(8px); pointer-events: none; }
+.gl-svc[data-open='true'] .gl-svc-detail { opacity: 1; transform: none; }
+.gl-svc-glow {
+  position: absolute; left: 0; right: 0; top: -1px; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, #3b7bff 0%, rgba(59, 123, 255, 0.4) 35%, transparent 70%);
+  box-shadow: 0 0 18px rgba(59, 123, 255, 0.6);
+  opacity: 0; transition: opacity 0.45s ease;
+}
+.gl-svc[data-open='true'] .gl-svc-glow { opacity: 1; }
+
+/* ---------- Process ---------- */
+.gl-step { transition: opacity 0.5s ease; }
+.gl-step[data-active='false'] { opacity: 0.32; }
+.gl-step[data-active='true'] { opacity: 1; }
+.gl-step-dot { transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease; }
+.gl-step[data-active='true'] .gl-step-dot {
+  background: var(--signal);
+  border-color: #8fb3ff;
+  box-shadow: 0 0 0 5px rgba(59, 123, 255, 0.16), 0 0 26px rgba(59, 123, 255, 0.9);
+}
+
+/* ---------- Marquee ---------- */
+.gl-marquee { display: flex; width: max-content; animation: gl-marquee var(--dur, 60s) linear infinite; }
+.gl-marquee[data-reverse='true'] { animation-direction: reverse; }
+.gl-marquee-wrap:hover .gl-marquee { animation-play-state: paused; }
+@keyframes gl-marquee { to { transform: translate3d(-50%, 0, 0); } }
+
+/* ---------- Form ---------- */
+.gl-field {
+  width: 100%;
+  min-width: 0;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(14, 15, 18, 0.7);
+  color: var(--chrome);
+  padding: 0.95rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.gl-field::placeholder { color: #5d636d; }
+.gl-field:hover { border-color: #3b414a; }
+.gl-field:focus { outline: none; border-color: var(--signal); box-shadow: 0 0 0 4px rgba(59, 123, 255, 0.18); }
+.gl-field[aria-invalid='true'] { border-color: #ff6b6b; }
+select.gl-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%238C939E' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+select.gl-field option { background: #1a1d22; color: var(--chrome); }
+
+.gl-chip {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  padding: 0.55rem 0.95rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: rgba(14, 15, 18, 0.6);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.gl-chip:hover { color: var(--chrome); border-color: #3b414a; }
+.gl-chip[aria-pressed='true'] {
+  color: #fff;
+  border-color: var(--signal);
+  background: rgba(59, 123, 255, 0.16);
+  box-shadow: 0 0 22px -4px rgba(59, 123, 255, 0.7);
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Reduced motion: only smooth scrolling and pinning are switched off (in JS). Visual motion stays by design. */

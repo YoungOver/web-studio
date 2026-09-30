@@ -1,0 +1,322 @@
+/* RESPAWN — site-scoped styles. All selectors are prefixed with .rs- */
+/* Same order Tailwind declares, so it holds whichever stylesheet loads first. */
+@layer theme, base, components, utilities;
+
+@layer components {
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.rs-root {
+  --void: #06050a;
+  --panel: #120e1f;
+  --line: #2a2342;
+  --text: #edeaf6;
+  --muted: #9a93b5;
+  --magenta: #ff2bd6;
+  --cyan: #22e7ff;
+  --violet: #8b5cff;
+  --signal: #ffe14d;
+  --display: 'Unbounded Variable', 'Unbounded', system-ui, sans-serif;
+  --body: 'Onest Variable', 'Onest', system-ui, sans-serif;
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--body);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+.rs-root :focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.rs-f-display {
+  font-family: var(--display);
+}
+
+.rs-display {
+  font-family: var(--display);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+}
+
+/* Background life: slow drifting glow blobs */
+.rs-blobs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.rs-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  opacity: 0.38;
+  will-change: transform;
+}
+.rs-blob-a {
+  width: 46vmax;
+  height: 46vmax;
+  left: -12vmax;
+  top: 10vh;
+  background: radial-gradient(circle at 40% 40%, #ff2bd6, transparent 68%);
+  animation: rs-drift-a 28s ease-in-out infinite alternate;
+}
+.rs-blob-b {
+  width: 42vmax;
+  height: 42vmax;
+  right: -14vmax;
+  top: 40vh;
+  background: radial-gradient(circle at 50% 50%, #22e7ff, transparent 66%);
+  opacity: 0.26;
+  animation: rs-drift-b 34s ease-in-out infinite alternate;
+}
+.rs-blob-c {
+  width: 38vmax;
+  height: 38vmax;
+  left: 30vw;
+  bottom: -18vmax;
+  background: radial-gradient(circle at 50% 50%, #6d3bff, transparent 66%);
+  opacity: 0.34;
+  animation: rs-drift-c 40s ease-in-out infinite alternate;
+}
+@keyframes rs-drift-a {
+  to { transform: translate3d(22vw, 18vh, 0) scale(1.15); }
+}
+@keyframes rs-drift-b {
+  to { transform: translate3d(-26vw, -22vh, 0) scale(0.9); }
+}
+@keyframes rs-drift-c {
+  to { transform: translate3d(-18vw, -30vh, 0) scale(1.2); }
+}
+
+/* Film grain */
+.rs-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: rs-grain 1.2s steps(6) infinite;
+}
+@keyframes rs-grain {
+  0% { background-position: 0 0; }
+  20% { background-position: -37px 23px; }
+  40% { background-position: 51px -64px; }
+  60% { background-position: -88px -12px; }
+  80% { background-position: 29px 71px; }
+  100% { background-position: 0 0; }
+}
+
+/* Glowing gradient CTA */
+.rs-cta {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 9999px;
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #0b0612;
+  background: linear-gradient(100deg, #ff2bd6 0%, #b04dff 45%, #22e7ff 100%);
+  background-size: 180% 100%;
+  background-position: 0% 50%;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+    0 10px 40px -8px rgba(255, 43, 214, 0.65),
+    0 0 60px -10px rgba(34, 231, 255, 0.55);
+  transition: background-position 0.6s ease, box-shadow 0.4s ease;
+  white-space: nowrap;
+}
+.rs-cta::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  z-index: -1;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(18px);
+  opacity: 0.55;
+  transition: opacity 0.4s ease;
+}
+.rs-cta:hover {
+  background-position: 100% 50%;
+}
+.rs-cta:hover::after {
+  opacity: 0.9;
+}
+.rs-cta:disabled {
+  filter: grayscale(0.8) brightness(0.6);
+  cursor: not-allowed;
+}
+
+.rs-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--line);
+  background: rgba(18, 14, 31, 0.55);
+  backdrop-filter: blur(10px);
+  color: var(--text);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+.rs-ghost:hover {
+  border-color: rgba(34, 231, 255, 0.6);
+  background: rgba(34, 231, 255, 0.08);
+}
+
+.rs-chrome-text {
+  background: linear-gradient(180deg, #ffffff 0%, #d9d4ec 38%, #6f6690 52%, #efeaff 70%, #9a93b5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.rs-gradient-text {
+  background: linear-gradient(95deg, #ffffff 0%, #f3d5ff 30%, #ff9cf0 55%, #9fefff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.rs-outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(237, 234, 246, 0.35);
+}
+
+/* Tournaments marquee */
+.rs-marquee {
+  display: flex;
+  width: max-content;
+  animation: rs-marquee 48s linear infinite;
+}
+.rs-marquee-wrap {
+  overflow: hidden;
+  scrollbar-width: none;
+}
+.rs-marquee-wrap::-webkit-scrollbar {
+  display: none;
+}
+.rs-marquee-wrap:hover .rs-marquee,
+.rs-marquee-wrap:focus-within .rs-marquee {
+  animation-play-state: paused;
+}
+@keyframes rs-marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Seat states */
+.rs-seat {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  border-radius: 10px;
+  font-family: var(--display);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+.rs-seat[data-state='free'] {
+  color: var(--signal);
+  border: 1.5px solid rgba(255, 225, 77, 0.7);
+  background: rgba(255, 225, 77, 0.07);
+  box-shadow: 0 0 14px -4px rgba(255, 225, 77, 0.6);
+  cursor: pointer;
+}
+.rs-seat[data-state='free']:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 225, 77, 0.16);
+  box-shadow: 0 0 22px -2px rgba(255, 225, 77, 0.75);
+}
+.rs-seat[data-state='busy'] {
+  color: rgba(154, 147, 181, 0.55);
+  border: 1px solid rgba(42, 35, 66, 0.9);
+  background: repeating-linear-gradient(135deg, rgba(42, 35, 66, 0.55) 0 4px, rgba(18, 14, 31, 0.7) 4px 8px);
+  cursor: not-allowed;
+}
+.rs-seat[data-state='selected'] {
+  color: #0b0612;
+  border: 1.5px solid #ff2bd6;
+  background: #ff2bd6;
+  box-shadow: 0 0 0 4px rgba(255, 43, 214, 0.18), 0 0 28px 0 rgba(255, 43, 214, 0.7);
+  cursor: pointer;
+}
+.rs-seat[data-state='mine'] {
+  color: #0b0612;
+  border: 1.5px solid #22e7ff;
+  background: #22e7ff;
+  box-shadow: 0 0 24px -2px rgba(34, 231, 255, 0.7);
+}
+
+.rs-pulse {
+  animation: rs-pulse 2.2s ease-in-out infinite;
+}
+@keyframes rs-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 225, 77, 0.7); }
+  50% { box-shadow: 0 0 0 7px rgba(255, 225, 77, 0); }
+}
+
+.rs-scanlines {
+  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rs-marquee {
+    animation-duration: 90s;
+  }
+}
+
+}
+
+/* Accordion overrides: unlayered on purpose so they beat the shadcn utility classes. */
+.rs-faq [data-slot='accordion-trigger'] {
+  font-family: var(--display);
+  font-weight: 650;
+  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+  letter-spacing: -0.02em;
+  padding-block: 1.5rem;
+  text-decoration: none;
+  align-items: center;
+}
+.rs-faq [data-slot='accordion-trigger']:focus-visible {
+  outline: 2px solid #22e7ff;
+  outline-offset: 4px;
+}
+.rs-faq [data-slot='accordion-trigger']:hover {
+  text-decoration: none;
+  color: #fff;
+}
+.rs-faq [data-slot='accordion-trigger'] svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--magenta);
+}
+.rs-faq [data-slot='accordion-item'] {
+  border-color: var(--line);
+}
+
+.rs-root ::selection {
+  background: #ff2bd6;
+  color: #06050a;
+}

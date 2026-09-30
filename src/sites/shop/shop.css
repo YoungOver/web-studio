@@ -1,0 +1,178 @@
+/* «Лаванда» — site-scoped styles, every selector is prefixed with .lv- */
+@layer theme, base, components, utilities;
+
+@layer components {
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lv-root {
+    --stone: #ede8e1;
+    --stone-2: #e4ded5;
+    --stone-3: #d8d0c4;
+    --paper: #f6f3ee;
+    --olive: #3f4a3c;
+    --olive-2: #56634f;
+    --lav: #8c7aa8;
+    --lav-2: #b7a9cc;
+    --lav-soft: #e2dce9;
+    --ink: #1e1e1c;
+    --muted: #6b675f;
+    --line: rgba(30, 30, 28, 0.13);
+    --serif: 'Fraunces Variable', 'Sitka Display', 'Sitka Heading', 'Palatino Linotype', 'PT Serif', Georgia, serif;
+    --sans: 'Manrope Variable', 'Segoe UI', system-ui, sans-serif;
+    background: var(--stone);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-feature-settings: 'ss01', 'cv11';
+    overflow-x: clip;
+  }
+  .lv-root ::selection {
+    background: var(--lav);
+    color: #fff;
+  }
+
+  .lv-serif {
+    font-family: var(--serif);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+  .lv-serif em,
+  .lv-serif i {
+    font-style: italic;
+    font-weight: 300;
+  }
+  .lv-num {
+    font-family: var(--serif);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .lv-grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 90;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .lv-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1;
+    transition:
+      background-color 0.25s,
+      color 0.25s,
+      box-shadow 0.25s,
+      transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lv-btn:active {
+    transform: scale(0.97);
+  }
+  .lv-btn-primary {
+    background: var(--olive);
+    color: #f4f1ea;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 10px 24px -12px rgba(38, 46, 36, 0.7);
+  }
+  .lv-btn-primary:hover {
+    background: #333d31;
+  }
+  .lv-btn-ghost {
+    border: 1px solid var(--line);
+    background: rgba(246, 243, 238, 0.5);
+    color: var(--ink);
+  }
+  .lv-btn-ghost:hover {
+    background: var(--paper);
+    border-color: rgba(30, 30, 28, 0.28);
+  }
+
+  .lv-link {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .lv-link:hover {
+    background-size: 100% 1px;
+  }
+
+  .lv-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 2.25rem;
+    padding: 0 0.95rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+    transition:
+      background-color 0.2s,
+      border-color 0.2s,
+      color 0.2s;
+  }
+  .lv-chip:hover {
+    border-color: rgba(30, 30, 28, 0.35);
+  }
+  .lv-chip[data-on='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--stone);
+  }
+
+  .lv-root :focus-visible {
+    outline: 2px solid var(--lav);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .lv-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(30, 30, 28, 0.2) transparent;
+  }
+
+  .lv-noscroll {
+    scrollbar-width: none;
+  }
+  .lv-noscroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lv-stage canvas {
+    pointer-events: none;
+  }
+
+  @keyframes lv-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .lv-marquee {
+    animation: lv-marquee 48s linear infinite;
+  }
+
+  @keyframes lv-shimmer {
+    to {
+      transform: translateX(220%);
+    }
+  }
+}
